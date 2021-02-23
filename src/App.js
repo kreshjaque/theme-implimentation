@@ -1,25 +1,28 @@
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import {ThemeProvider} from "styled-components";
+import { GlobalStyles } from "./components/GlobalStyles";
+import { lightTheme, darkTheme } from "./components/Themes"
+import "./App.css";
+import Toggle from "./components/Toggler";
+import {useDarkMode} from "./components/useDarkMode";
+import ThemeSwitch from "./components/ThemeSwitch";
 
-function App() {
+const App = () => {
+    const {theme, themeToggler, themeTogglerWithParam} = useDarkMode();
+    const themeMode = theme === 'light' ? lightTheme : darkTheme;
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+      <ThemeProvider theme={themeMode}>
+        <>
+          <GlobalStyles/>
+          <div className="App">
+              <Toggle theme={theme} toggleTheme={themeToggler} />
+              <h1>Alive</h1>
+              <ThemeSwitch theme={theme} switchTheme={themeTogglerWithParam} />
+            <p>Still alive</p>
+          </div>
+        </>
+      </ThemeProvider>
 
+  );
+};
 export default App;
